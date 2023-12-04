@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_call/pages/video_call_page.dart';
@@ -36,12 +37,19 @@ class _HomePageState extends State<HomePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 90,
-                    child: Icon(
-                      Icons.video_chat_rounded,
-                      color: Colors.blueGrey,
-                      size: 80,
+                const  AvatarGlow(
+                    startDelay: Duration(seconds: 2),
+                    glowColor: Colors.blueGrey,
+                    endRadius: 120,
+                    showTwoGlows: true,
+                    animate: true,
+                    child:  CircleAvatar(
+                      radius: 90,
+                      child: Icon(
+                        Icons.video_chat_rounded,
+                        color: Colors.blueGrey,
+                        size: 80,
+                      ),
                     ),
                   ),
                   const SizedBox(
