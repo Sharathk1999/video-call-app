@@ -1,12 +1,9 @@
 # Simple Video Call App
 
 
-# Video call App with ZEGOCLOUD Call KIT Integration
+## Video call App with ZEGOCLOUD Call KIT Integration
 
 ## Key Features:
-
-- Random Meal Display: Displays a random meal to inspire users' culinary adventures.
-
 - Can enter user name and call id to make the call
 - Unique user id is generated for each user
 
