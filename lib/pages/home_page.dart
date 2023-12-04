@@ -103,6 +103,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       );
+                      _idController.clear();
+                      _nameController.clear();
                     },
                     icon: const Icon(Icons.call),
                     label: const Text('Call'),
