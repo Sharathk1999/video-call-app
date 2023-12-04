@@ -1,16 +1,26 @@
-# video_call
+# Simple Video Call App
 
-A new Flutter project.
 
-## Getting Started
+# Video call App with ZEGOCLOUD Call KIT Integration
 
-This project is a starting point for a Flutter application.
+## Key Features:
 
-A few resources to get you started if this is your first Flutter project:
+- Random Meal Display: Displays a random meal to inspire users' culinary adventures.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Can enter user name and call id to make the call
+- Unique user id is generated for each user
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Zegocloud Documentation:
+
+-Here is a link to quick start
+ [Documentation PDF](https://docs.zegocloud.com/en/ZEGOCLOUD_UIKIT/Quickstarts_new/Quick_start_basic/flutter_dart1689563839000.pdf)
+
+
+
+
+
+### App Preview
+
+![App UI](/vc_img01.png)
+
+![App UI](/vc_img02.png)
