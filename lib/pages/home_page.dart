@@ -13,10 +13,19 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _idController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _idController.dispose();
+    _nameController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Video Call'),
       ),
       body: Padding(
@@ -24,50 +33,74 @@ class _HomePageState extends State<HomePage> {
         child: SafeArea(
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      hintText: 'Enter name'),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _idController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      hintText: 'Enter Id'),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    var uuid = Uuid();
-                    String userID = '${_nameController.text.trim()}${uuid.v4()}';
-                    print(userID);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CallPage(
-                          callID: _idController.text.trim(),
-                          userName: _nameController.text.trim(),
-                          userID: userID,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const CircleAvatar(
+                    radius: 90,
+                    child: Icon(
+                      Icons.video_chat_rounded,
+                      color: Colors.blueGrey,
+                      size: 80,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: _nameController,
+                    decoration:const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            bottomLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.call),
-                  label: const Text('Call'),
-                ),
-              ],
+                        
+                        hintText: 'Enter name'),
+                        textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    controller: _idController,
+                    decoration:const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            bottomLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                        hintText: 'Enter call id'),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      var uuid =const Uuid();
+                      String userID =
+                          '${_nameController.text.trim()}${uuid.v4()}';
+                     
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CallPage(
+                            callID: _idController.text.trim(),
+                            userName: _nameController.text.trim(),
+                            userID: userID,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.call),
+                    label: const Text('Call'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
