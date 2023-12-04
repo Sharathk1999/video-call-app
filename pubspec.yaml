@@ -38,6 +38,7 @@ dependencies:
   zego_uikit_prebuilt_call: ^3.17.9
   uuid: ^3.0.7
   avatar_glow: ^2.0.2
+  connectivity_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:

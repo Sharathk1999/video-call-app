@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_call/pages/video_call_page.dart';
@@ -14,6 +17,14 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _idController = TextEditingController();
+  late StreamSubscription subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    subscription =
+        Connectivity().onConnectivityChanged.listen(_checkConnectSnackBar);
+  }
 
   @override
   void dispose() {
@@ -37,13 +48,13 @@ class _HomePageState extends State<HomePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                const  AvatarGlow(
+                  const AvatarGlow(
                     startDelay: Duration(seconds: 2),
                     glowColor: Colors.blueGrey,
                     endRadius: 120,
                     showTwoGlows: true,
                     animate: true,
-                    child:  CircleAvatar(
+                    child: CircleAvatar(
                       radius: 90,
                       child: Icon(
                         Icons.video_chat_rounded,
@@ -57,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   TextFormField(
                     controller: _nameController,
-                    decoration:const InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(50),
@@ -65,16 +76,15 @@ class _HomePageState extends State<HomePage> {
                             bottomRight: Radius.circular(50),
                           ),
                         ),
-                        
                         hintText: 'Enter name'),
-                        textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
                     controller: _idController,
-                    decoration:const InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(50),
@@ -88,11 +98,13 @@ class _HomePageState extends State<HomePage> {
                     height: 15,
                   ),
                   ElevatedButton.icon(
-                    onPressed: () {
-                      var uuid =const Uuid();
+                    onPressed: () async {
+                      final result = await Connectivity().checkConnectivity();
+                      _checkConnectSnackBar(result);
+                      var uuid = const Uuid();
                       String userID =
                           '${_nameController.text.trim()}${uuid.v4()}';
-                     
+                      if (!context.mounted) return;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -116,5 +128,24 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void _checkConnectSnackBar(ConnectivityResult result) {
+    final hasInternet = result != ConnectivityResult.none;
+    final message = hasInternet
+        ? result == ConnectivityResult.mobile
+            ? 'Connected to mobile network'
+            : 'Connected to wifi network'
+        : 'No internet connection';
+    final color = hasInternet ? Colors.green : Colors.red;
+    _showSnackbar(context, message, color);
+  }
+
+  void _showSnackbar(BuildContext context, String? message, Color color) {
+    final snackBar = SnackBar(
+      content: Text(message!),
+      backgroundColor: color,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
